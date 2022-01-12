@@ -1,4 +1,5 @@
-const api = jQuery(".test") //不返回元素们，返回api对象
-api.addClass('red')
+jQuery(".test") // 选择元素，但不会返回元素，返回的是对其进行操作的API对象
+    .addClass('red')
     .addClass('green')
-    .addClass('blue') // 链式操作；遍历所以刚才获取的元素，添加.red等
+    .addClass('blue') // 链式操作；
+
