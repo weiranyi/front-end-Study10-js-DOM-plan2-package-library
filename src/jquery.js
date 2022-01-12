@@ -11,6 +11,7 @@ window.jQuery = function (selectorOrArray) {
 
     // 返回一个可以操作elements的api
     return {
+        oldApi:selectorOrArray.oldApi, // 将数组中旧的api赋值给oldapi
         // 闭包：函数访问外部变量
         addClass(className) {
             // 遍历所以刚才获取的元素，添加.red等
@@ -24,8 +25,11 @@ window.jQuery = function (selectorOrArray) {
             for (let i = 0; i < elements.length; i++) {
                 array = array.concat(Array.from(elements[i].querySelectorAll(selector)));
             }
-            const newApi = jQuery(array);
-            return newApi;
+            array.oldApi = this; // 将旧的api放到数组身上
+            return jQuery(array);
+        },
+        end(){
+            return this.oldApi; // 将当前新的api中旧的api返回
         }
     }
 }
