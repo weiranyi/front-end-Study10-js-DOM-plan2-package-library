@@ -1,4 +1,5 @@
-# 1、预览：https://weiranyi.github.io/front-end-Study10-js-DOM-plan2-package-library/dist/index.html
+# 1、预览：
+https://weiranyi.github.io/front-end-Study10-js-DOM-plan2-package-library/dist/index.html
 # 2、知识点
 - jQuery是构造函数吗？
   - 是（因为jQuery函数确实构造了一个对象，暂简称：api对象）
