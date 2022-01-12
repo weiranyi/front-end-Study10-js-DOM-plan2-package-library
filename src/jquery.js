@@ -1,4 +1,4 @@
-window.jQuery = function (selectorOrArray) {
+window.$ = window.jQuery = function (selectorOrArray) {
     /*
     * 选择器或者数组
     * */
