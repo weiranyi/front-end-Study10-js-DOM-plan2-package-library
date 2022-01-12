@@ -1,5 +1,14 @@
-window.jQuery = function (selector) {
-    const elements = document.querySelectorAll(selector); // 获取元素
+window.jQuery = function (selectorOrArray) {
+    /*
+    * 选择器或者数组
+    * */
+    let elements;
+    if (typeof selectorOrArray === 'string'){
+        elements = document.querySelectorAll(selectorOrArray); // 获取元素
+    }else if(selectorOrArray instanceof Array){
+        elements = selectorOrArray;
+    }
+
     // 返回一个可以操作elements的api
     return {
         // 闭包：函数访问外部变量
@@ -8,15 +17,15 @@ window.jQuery = function (selector) {
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(className)
             }
-            return api;// 能够进行链式操作关键是返回了同样的api对象，this指的就是api
+            return this;// 能够进行链式操作关键是返回了同样的api对象，this指的就是api
         },
         find(selector){
             let array = []
             for (let i = 0; i < elements.length; i++) {
                 array = array.concat(Array.from(elements[i].querySelectorAll(selector)));
             }
-
-            return array;
+            const newApi = jQuery(array);
+            return newApi;
         }
     }
 }
