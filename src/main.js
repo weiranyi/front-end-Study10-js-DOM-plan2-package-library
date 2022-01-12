@@ -4,9 +4,10 @@
 //     .addClass('blue') // 链式操作；
 
 
-jQuery('.test')
-    .find('.child')
-    .addClass('blue')
-    .addClass('red')
-    .end()
-    .addClass('green')
+const x = jQuery('.test')
+//     .find('.child')
+//
+// x.each((div) => console.log(div));
+
+// x.parent().print();
+x.children().print();
