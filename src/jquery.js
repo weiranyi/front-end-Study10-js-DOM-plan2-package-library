@@ -9,6 +9,14 @@ window.jQuery = function (selector) {
                 elements[i].classList.add(className)
             }
             return api;// 能够进行链式操作关键是返回了同样的api对象，this指的就是api
+        },
+        find(selector){
+            let array = []
+            for (let i = 0; i < elements.length; i++) {
+                array = array.concat(Array.from(elements[i].querySelectorAll(selector)));
+            }
+
+            return array;
         }
     }
 }
