@@ -9,3 +9,9 @@ https://weiranyi.github.io/front-end-Study10-js-DOM-plan2-package-library/dist/i
 - 编码规范
   - dom的API用el开头: let eldiv
   - jQuery的API用$开头: let $div
+
+- 设计模式
+  - 目前最长寿的库
+  - 不用new做一个构造函数，没有专门的模式
+  - 重载，$()支持多种参数
+  - 用闭包隐藏细节

@@ -106,7 +106,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"jquery.js":[function(require,module,exports) {
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-window.jQuery = function (selectorOrArray) {
+window.$ = window.jQuery = function (selectorOrArray) {
     /*
     * 选择器或者数组
     * */
@@ -117,54 +117,62 @@ window.jQuery = function (selectorOrArray) {
         elements = selectorOrArray;
     }
 
-    // 返回一个可以操作elements的api
-    return {
-        oldApi: selectorOrArray.oldApi, // 将数组中旧的api赋值给oldapi
-        // 闭包：函数访问外部变量
-        addClass: function addClass(className) {
-            // 遍历所以刚才获取的元素，添加.red等
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].classList.add(className);
-            }
-            return this; // 能够进行链式操作关键是返回了同样的api对象，this指的就是api
-        },
-        find: function find(selector) {
-            var array = [];
-            for (var i = 0; i < elements.length; i++) {
-                array = array.concat(Array.from(elements[i].querySelectorAll(selector)));
-            }
-            array.oldApi = this; // 将旧的api放到数组身上
-            return jQuery(array);
-        },
-        end: function end() {
-            return this.oldApi; // 将当前新的api中旧的api返回
-        },
-        each: function each(fn) {
-            for (var i = 0; i < elements.length; i++) {
-                fn.call(null, elements[i], i);
-            }
-            return this;
-        },
-        parent: function parent() {
-            var array = [];
-            this.each(function (node) {
-                if (array.indexOf(node.parentNode) === -1) {
-                    array.push(node.parentNode);
-                }
-            });
-            return jQuery(array);
-        },
-        children: function children() {
-            var array = [];
-            this.each(function (node) {
-                array.push.apply(array, _toConsumableArray(node.children)); //...把每个节点分开
-            });
-            return jQuery(array);
-        },
-        print: function print() {
-            console.log(elements);
+    var api = Object.create(jQuery.prototype); // 创建一个对象，这个对象的__proto__指向括号里的东西
+    // api.elements = elements;
+    // api.oldApi =selectorOrArray.oldApi
+    Object.assign(api, {
+        elements: elements,
+        oldApi: selectorOrArray.oldApi
+    });
+    return api;
+};
+
+jQuery.fn = jQuery.prototype = {
+    jQuery: true,
+    constructor: jQuery,
+    addClass: function addClass(className) {
+        // 遍历所以刚才获取的元素，添加.red等
+        for (var i = 0; i < this.elements.length; i++) {
+            this.elements[i].classList.add(className);
         }
-    };
+        return this; // 能够进行链式操作关键是返回了同样的api对象，this指的就是api
+    },
+    find: function find(selector) {
+        var array = [];
+        for (var i = 0; i < this.elements.length; i++) {
+            array = array.concat(Array.from(this.elements[i].querySelectorAll(selector)));
+        }
+        array.oldApi = this; // 将旧的api放到数组身上
+        return jQuery(array);
+    },
+    end: function end() {
+        return this.oldApi; // 将当前新的api中旧的api返回
+    },
+    each: function each(fn) {
+        for (var i = 0; i < this.elements.length; i++) {
+            fn.call(null, this.elements[i], i);
+        }
+        return this;
+    },
+    parent: function parent() {
+        var array = [];
+        this.each(function (node) {
+            if (array.indexOf(node.parentNode) === -1) {
+                array.push(node.parentNode);
+            }
+        });
+        return jQuery(array);
+    },
+    children: function children() {
+        var array = [];
+        this.each(function (node) {
+            array.push.apply(array, _toConsumableArray(node.children)); //...把每个节点分开
+        });
+        return jQuery(array);
+    },
+    print: function print() {
+        console.log(this.elements);
+    }
 };
 },{}],"../../../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -195,7 +203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '61613' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '60898' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
